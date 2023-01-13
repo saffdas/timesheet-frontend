@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import axios from "axios";
 import authHeader from "./services/auth-header";
 import Login from "./Login/Login";
+import TimeSheet from"./timesheet/detail/App"
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -15,6 +16,7 @@ root.render(
   <React.StrictMode>
     {/*<App />*/}
       <Login/>
+      <TimeSheet/>
   </React.StrictMode>
 );
 
