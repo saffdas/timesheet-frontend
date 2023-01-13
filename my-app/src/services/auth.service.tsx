@@ -10,6 +10,7 @@ class AuthService {
                 console.log(response);
                 if (response.data.token) {
                     localStorage.setItem("token", response.data.token);
+                    localStorage.setItem("employeeId", response.data.employeeId);
                 }
                 return response.data;
             });

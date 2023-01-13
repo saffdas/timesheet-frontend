@@ -20,7 +20,7 @@ export interface IDayContext {
     updateEndTime:(day:string,endTime:string)=>void;
     updateDayType:(day:string,dayType:string)=>void;
     updateWeekEnding:(field:string)=>void;
-    getData(date:string);
+    getData(date:string):any;
 }
 export const DayContext: Context<IDayContext> = React.createContext(
     {} as IDayContext
@@ -126,7 +126,6 @@ export default function DayProvider({ children }: Props): JSX.Element {
 
     return (
         <>
-
             <DayContext.Provider
                 value={{detail, days, updateDayTotalHours, updateStartTime, updateEndTime, updateDayType,updateWeekEnding,getData
                     }}>
