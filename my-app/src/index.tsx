@@ -23,6 +23,7 @@ root.render(
 // Add a request interceptor
 axios.interceptors.request.use(
     config => {
+        console.log("Request intercepted!")
         const token = localStorage.getItem("token");
         if (token && config) {
             config.headers = authHeader();
