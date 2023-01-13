@@ -1,0 +1,112 @@
+import axios from 'axios'
+
+interface Params {
+    baseUrl: string
+    headers : any
+    method: string
+}
+
+const postConfig: Params = {
+    baseUrl: "http://localhost:9000/timesheet-detail-service/timesheet/detail",
+    headers: {
+        // "Authorization": token
+        "Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjNAZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlt7ImF1dGhvcml0eSI6InJlYWQifSx7ImF1dGhvcml0eSI6IndyaXRlIn0seyJhdXRob3JpdHkiOiJ1cGRhdGUifSx7ImF1dGhvcml0eSI6ImRlbGV0ZSJ9XSwiZW1wbG95ZWVJZCI6MSwiZXhwaXJlSW5NaWxsaXNlY29uZHMiOjE2NzM2NDk1NjQ2NDF9.hQPEvoewfWRTyJ9aJ8g-V1su6JExbvugj1VyeFmv_4E"
+    },
+    method: 'post'
+}
+
+
+interface Params {
+    baseUrl: string
+    headers : any
+    method: string
+}
+
+export  const postAPI = async (url: string, data: any): Promise<any> =>{
+    return await axios({
+        ...postConfig,
+        url: `${postConfig.baseUrl}/${url}`,
+        data
+    }).then ( (response) => {
+        console.log(response)
+        return {
+            status: response.status,
+            data: response.data
+        }
+    }).catch((error) =>{
+        console.log(error)
+        return {
+            status: error.status,
+            data: error.response
+        }
+    })
+}
+//config for get request note that the method as changed to get this is very important
+// const getConfig : Params = {
+//     baseUrl: "https://jsonplaceholder.typicode.com",
+//     headers: {
+//         "Authorization":"1"
+//     },
+//     method: 'get'
+// }
+// export const getAPI = async (url: string, data: any): Promise<any> =>{
+//     return await axios({
+//         ...getConfig,
+//         url: `${getConfig.baseUrl}/${url}/${data}`,
+//     }).then ( (response) => {
+//         console.log(response)
+//         return {
+//             status: response.status,
+//             data: response.data
+//         }
+//     }).catch((error) =>{
+//         console.log(error)
+//         return {
+//             status: error.status,
+//             data: error.response
+//         }
+//     })
+// }
+
+const token = localStorage.getItem('token');
+const getConfig : Params = {
+    baseUrl: "http://localhost:9000/timesheet-detail-service/timesheet/detail",
+    headers: {
+        // "Authorization": token
+        "Authorization":"Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMjNAZ21haWwuY29tIiwicGVybWlzc2lvbnMiOlt7ImF1dGhvcml0eSI6InJlYWQifSx7ImF1dGhvcml0eSI6IndyaXRlIn0seyJhdXRob3JpdHkiOiJ1cGRhdGUifSx7ImF1dGhvcml0eSI6ImRlbGV0ZSJ9XSwiZW1wbG95ZWVJZCI6MSwiZXhwaXJlSW5NaWxsaXNlY29uZHMiOjE2NzM2NDk1NjQ2NDF9.hQPEvoewfWRTyJ9aJ8g-V1su6JExbvugj1VyeFmv_4E"
+    },
+    method: 'get'
+}
+function formatDate(date:any) {
+    // date.setDate(date.getDate() + 1);
+    var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2)
+        month = '0' + month;
+    if (day.length < 2)
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+}
+export const getTimesheetDetail = async (url: string, date: Date): Promise<any> =>{
+    let data = formatDate(date)
+    return await axios({
+        ...getConfig,
+        url: `${getConfig.baseUrl}/${url}/${data}`,
+    }).then ( (response) => {
+        console.log(response)
+        return {
+            status: response.status,
+            data: response.data
+        }
+    }).catch((error) =>{
+        console.log(error)
+        return {
+            status: error.status,
+            data: error.response
+        }
+    })
+}
