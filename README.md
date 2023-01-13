@@ -1,8 +1,10 @@
 # timesheet-frontend
 
+* Always cd my-app from terminal at start
+* to Run for the first time, cd my-app then npm install
+
 * When running the probram from the terminal, first:
-  * 1. cd my-app
-  * 2. npm start
+  * npm start
   * That should do the job
 
 * If you want to run from the green triangle button, please:
