@@ -22,6 +22,7 @@ export default function EndTime(props: Props): JSX.Element {
                 type="time"
                 value={endTime}
                 onChange={handleChange}
+                disabled={dayType!=="normal day"?true:false}
             ></input>
         </div>
     );

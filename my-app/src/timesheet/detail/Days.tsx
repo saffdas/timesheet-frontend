@@ -7,7 +7,10 @@ import EndTime from "./EndTime"
 import TotalHours from "./TotalHours";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
-import DayType from "./DayType";
+import FloatingDayType from "./FloatingDayType";
+import HolidayDayType from "./HolidayDayType";
+import VocationDayType from "./VocationDayType";
+import NormalDayType from "./NormalDayType"
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
@@ -16,7 +19,7 @@ import {getTimesheetDetail, postAPI} from "./Api";
 import dayjs, {Dayjs} from 'dayjs';
 
 interface Detail {
-    weekEnding: string; totalBillingHours: number; totalCompensatedHours: number; employeeId:string;
+    weekEnding: string; totalBillingHours: number; totalCompensatedHours: number; employeeId:string;totalHours:number;
     day1: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
     day2: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
     day3: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
@@ -74,6 +77,7 @@ export default function Days(): JSX.Element {
                 totalCompensatedHours: totalCompensatedHours,
                 weekEnding: weekEndingValue,
                 totalBillingHours: totalBillingHours,
+                totalHours:totalCompensatedHours,
                 employeeId:"1",
             })
 
@@ -148,6 +152,7 @@ export default function Days(): JSX.Element {
                 <th>Floatting Day</th>
                 <th>Holiday</th>
                 <th>Vacation</th>
+                <th>Normal Day</th>
             </tr>
             </thead>
                 <tbody>
@@ -179,7 +184,22 @@ export default function Days(): JSX.Element {
                 </td>
                 <td>
                     {days.map((day) => (
-                        <DayType key={day.day} day={day} />
+                        <FloatingDayType key={day.day} day={day} />
+                    ))}
+                </td>
+                <td>
+                    {days.map((day) => (
+                        <HolidayDayType key={day.day} day={day} />
+                    ))}
+                </td>
+                <td>
+                    {days.map((day) => (
+                        <VocationDayType key={day.day} day={day} />
+                    ))}
+                </td>
+                <td>
+                    {days.map((day) => (
+                        <NormalDayType key={day.day} day={day} />
                     ))}
                 </td>
                 </tbody>
