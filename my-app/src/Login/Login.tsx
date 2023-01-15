@@ -31,16 +31,11 @@ export default function Login() {
             .then(response => {
                 alert(response.message);
                 setIsLoggedIn(true);
-                navigate('/main')
+                navigate('/main');
+                localStorage.setItem("employeeEmail", email);
             })
             .catch(error => alert(`${error}\nLogin Unsuccessful! Please check you Email and Password!`));
     }
-    // if (isLoggedIn) return (
-        
-    //     <Navigate to="/main" replace={true} />
-    
-    // )
-        
     
     return (
         <div className="Login" style={{marginLeft: 30}}>

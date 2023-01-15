@@ -128,6 +128,7 @@ export default function DayProvider({ children }: Props): JSX.Element {
             <DayContext.Provider
                 value={{
                     days,
+                    // @ts-ignore
                     detail,
                     getData,
                     updateDayTotalHours,
