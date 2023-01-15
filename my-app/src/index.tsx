@@ -7,6 +7,7 @@ import axios from "axios";
 import authHeader from "./services/auth-header";
 import Login from "./Login/Login";
 import TimeSheet from"./timesheet/detail/App"
+import Profile from "./Profile/Profile";
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -17,6 +18,7 @@ root.render(
     {/*<App />*/}
       <Login/>
       <TimeSheet/>
+      <Profile/>
   </React.StrictMode>
 );
 
