@@ -26,6 +26,7 @@ export default function TotalHours(props: Props): JSX.Element {
                         <input
                             type="text"
                             value={totalHours}
+                            disabled={dayType!=="normal day"?true:false}
                         ></input>
                     </td>
         </div>

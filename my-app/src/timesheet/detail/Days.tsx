@@ -7,7 +7,10 @@ import EndTime from "./EndTime"
 import TotalHours from "./TotalHours";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
-import DayType from "./DayType";
+import FloatingDayType from "./FloatingDayType";
+import HolidayDayType from "./HolidayDayType";
+import VocationDayType from "./VocationDayType";
+import NormalDayType from "./NormalDayType"
 import {AdapterDayjs} from "@mui/x-date-pickers/AdapterDayjs";
 import {DatePicker} from "@mui/x-date-pickers/DatePicker";
 import TextField from "@mui/material/TextField";
@@ -16,7 +19,7 @@ import {getTimesheetDetail, postAPI} from "./Api";
 import dayjs, {Dayjs} from 'dayjs';
 
 interface Detail {
-    weekEnding: string; totalBillingHours: number; totalCompensatedHours: number; employeeId:string;
+    weekEnding: string; totalBillingHours: number; totalCompensatedHours: number; employeeId:string;totalHours:number;
     day1: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
     day2: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
     day3: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
@@ -56,10 +59,8 @@ export default function Days(): JSX.Element {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        console.log(days[0].endTime)
         postData();
         postAPI("save",postdetail);
-        console.log(postdetail);
     };
     const postData = (): void => {
         setDetail(
@@ -74,14 +75,14 @@ export default function Days(): JSX.Element {
                 totalCompensatedHours: totalCompensatedHours,
                 weekEnding: weekEndingValue,
                 totalBillingHours: totalBillingHours,
-                employeeId:"1",
+                totalHours:totalCompensatedHours,
+                employeeId:localStorage.getItem("employeeId"),
             })
 
     }
 
     const handleWeekEndingChange =(newValue:any) => {
         setweekEndingValue(newValue);
-        console.log("in days");
         getData(newValue);
     }
     // const postData = (): void => {
@@ -110,10 +111,21 @@ export default function Days(): JSX.Element {
         dayType!=="normal day"?totalCompensatedDay += 1:console.log("");
     });
     totalCompensatedHours=totalBillingHours+8*totalCompensatedDay;
+
+    function setDefault(e: { preventDefault: () => void; }) {
+        e.preventDefault();
+        postData();
+        postAPI("timesheet-default-service/defaultTimesheet/save",postdetail);
+    }
+    function submitForm(e: { preventDefault: () => void; }) {
+        e.preventDefault();
+        postData();
+        postAPI("timesheet-detail-service/timesheet/detail/save",postdetail);
+    }
+
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-
+            <form>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="WeekEnding"
@@ -136,6 +148,8 @@ export default function Days(): JSX.Element {
                             type="text"
                             value={totalCompensatedHours}
                         ></input>
+
+                        <input type="submit" name="setDefault" value="Set As Default" onClick={setDefault}></input>
             <Table striped bordered hover>
 
             <thead>
@@ -148,6 +162,7 @@ export default function Days(): JSX.Element {
                 <th>Floatting Day</th>
                 <th>Holiday</th>
                 <th>Vacation</th>
+                <th>Normal Day</th>
             </tr>
             </thead>
                 <tbody>
@@ -179,14 +194,36 @@ export default function Days(): JSX.Element {
                 </td>
                 <td>
                     {days.map((day) => (
-                        <DayType key={day.day} day={day} />
+                        <FloatingDayType key={day.day} day={day} />
+                    ))}
+                </td>
+                <td>
+                    {days.map((day) => (
+                        <HolidayDayType key={day.day} day={day} />
+                    ))}
+                </td>
+                <td>
+                    {days.map((day) => (
+                        <VocationDayType key={day.day} day={day} />
+                    ))}
+                </td>
+                <td>
+                    {days.map((day) => (
+                        <NormalDayType key={day.day} day={day} />
                     ))}
                 </td>
                 </tbody>
             </Table>
                     </LocalizationProvider>
 
-            <button type="submit">Save</button>
+                <input
+                    type="submit"
+                    name="save"
+                    value="Save"
+                    onClick={
+                    submitForm
+                    }
+                ></input>
         </form>
         </div>
     );

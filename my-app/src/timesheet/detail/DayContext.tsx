@@ -3,7 +3,7 @@ import {getTimesheetDetail, postAPI} from "./Api";
 
 type DayState = { day: string; date: string; startTime: string; endTime: string;totalHours:string;dayType:string }[];
 interface Detail {
-    weekEnding: string; totalBillingHours: number; totalCompensatedHours: number;employeeId:string;
+    weekEnding: string; totalBillingHours: number; totalCompensatedHours: number;employeeId:string; totalHours:string;
     day1: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
     day2: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
     day3: { day: string; date: string; startTime: string; endTime: string; totalHours: string; dayType: string };
@@ -48,12 +48,11 @@ export default function DayProvider({ children }: Props): JSX.Element {
         // day5: {day: "ddd", date: "dd", startTime: "dddd", endTime: "end", totalHours: "4", dayType: "none"},
         // day6: {day: "ddd", date: "dd", startTime: "dddd", endTime: "end", totalHours: "4", dayType: "none"},
         // day7: {day: "ddd", date: "dd", startTime: "dddd", endTime: "end", totalHours: "4", dayType: "none"}
-
     );
     React.useEffect(() => {
         getData("2023-01-15")
     }, [])
-    const getData = (date:any) => getTimesheetDetail("employee/weekEnding", date).then(
+    const getData = (date:any) => getTimesheetDetail("employee/weekEnding", date,localStorage.getItem("employeeId")).then(
         (res) => {
             if (res.status === 200) {
                 setDetail(res.data)
@@ -127,8 +126,16 @@ export default function DayProvider({ children }: Props): JSX.Element {
     return (
         <>
             <DayContext.Provider
-                value={{detail, days, updateDayTotalHours, updateStartTime, updateEndTime, updateDayType,updateWeekEnding,getData
-                    }}>
+                value={{
+                    days,
+                    detail,
+                    getData,
+                    updateDayTotalHours,
+                    updateDayType,
+                    updateEndTime,
+                    updateStartTime,
+                    updateWeekEnding
+                }}>
                 {children}
             </DayContext.Provider></>
     );
