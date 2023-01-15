@@ -15,8 +15,10 @@ class ProfileService {
             .catch(error => console.log(error));
     }
 
-    saveEmployeeContacts(c1: Contact, c2: Contact, c3: Contact) {
+    saveEmployeeContact(contact: Contact) {
+        console.log("In saveEmployeeContact!");
 
+        return axios.post(CONTACT_URL + "/updateContact", contact);
     }
 }
 
@@ -25,6 +27,7 @@ export interface Contact {
     employeeId: number,
     name: string,
     address: string,
+    phoneNumber: string,
     isEmergency: boolean
 }
 

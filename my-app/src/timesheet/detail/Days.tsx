@@ -63,6 +63,7 @@ export default function Days(): JSX.Element {
         postAPI("save",postdetail);
     };
     const postData = (): void => {
+        // @ts-ignore
         setDetail(
             {
                 day1: {date: days[0].date.substring(0,10), day: days[0].day, dayType: days[0].dayType, endTime: days[0].endTime, startTime: days[0].startTime, totalHours: days[0].totalHours},
@@ -76,7 +77,7 @@ export default function Days(): JSX.Element {
                 weekEnding: weekEndingValue,
                 totalBillingHours: totalBillingHours,
                 totalHours:totalCompensatedHours,
-                employeeId:localStorage.getItem("employeeId"),
+                employeeId:localStorage.getItem("employeeId")!,
             })
 
     }
