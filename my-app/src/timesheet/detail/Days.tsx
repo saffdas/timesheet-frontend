@@ -59,10 +59,8 @@ export default function Days(): JSX.Element {
 
     const handleSubmit: FormEventHandler<HTMLFormElement> = (e) => {
         e.preventDefault();
-        console.log(days[0].endTime)
         postData();
         postAPI("save",postdetail);
-        console.log(postdetail);
     };
     const postData = (): void => {
         setDetail(
@@ -78,14 +76,13 @@ export default function Days(): JSX.Element {
                 weekEnding: weekEndingValue,
                 totalBillingHours: totalBillingHours,
                 totalHours:totalCompensatedHours,
-                employeeId:"1",
+                employeeId:localStorage.getItem("employeeId"),
             })
 
     }
 
     const handleWeekEndingChange =(newValue:any) => {
         setweekEndingValue(newValue);
-        console.log("in days");
         getData(newValue);
     }
     // const postData = (): void => {
@@ -114,10 +111,21 @@ export default function Days(): JSX.Element {
         dayType!=="normal day"?totalCompensatedDay += 1:console.log("");
     });
     totalCompensatedHours=totalBillingHours+8*totalCompensatedDay;
+
+    function setDefault(e: { preventDefault: () => void; }) {
+        e.preventDefault();
+        postData();
+        postAPI("timesheet-default-service/defaultTimesheet/save",postdetail);
+    }
+    function submitForm(e: { preventDefault: () => void; }) {
+        e.preventDefault();
+        postData();
+        postAPI("timesheet-detail-service/timesheet/detail/save",postdetail);
+    }
+
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-
+            <form>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                     <DatePicker
                         label="WeekEnding"
@@ -140,6 +148,8 @@ export default function Days(): JSX.Element {
                             type="text"
                             value={totalCompensatedHours}
                         ></input>
+
+                        <input type="submit" name="setDefault" value="Set As Default" onClick={setDefault}></input>
             <Table striped bordered hover>
 
             <thead>
@@ -206,7 +216,14 @@ export default function Days(): JSX.Element {
             </Table>
                     </LocalizationProvider>
 
-            <button type="submit">Save</button>
+                <input
+                    type="submit"
+                    name="save"
+                    value="Save"
+                    onClick={
+                    submitForm
+                    }
+                ></input>
         </form>
         </div>
     );

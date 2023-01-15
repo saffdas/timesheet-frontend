@@ -48,7 +48,6 @@ export default function DayProvider({ children }: Props): JSX.Element {
         // day5: {day: "ddd", date: "dd", startTime: "dddd", endTime: "end", totalHours: "4", dayType: "none"},
         // day6: {day: "ddd", date: "dd", startTime: "dddd", endTime: "end", totalHours: "4", dayType: "none"},
         // day7: {day: "ddd", date: "dd", startTime: "dddd", endTime: "end", totalHours: "4", dayType: "none"}
-
     );
     React.useEffect(() => {
         getData("2023-01-15")

@@ -8,7 +8,7 @@ interface Params {
 }
 
 const postConfig: Params = {
-    baseUrl: "http://localhost:9000/timesheet-detail-service/timesheet/detail",
+    baseUrl: "http://localhost:9000",
     headers: authHeader(),
     method: 'post'
 }
