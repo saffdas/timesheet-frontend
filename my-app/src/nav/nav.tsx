@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link, Navigate } from 'react-router-dom'
-import Profile from '../profile/profile';
 import Summary from '../summary/summary';
 import TimeSheet from '../timesheet/detail/App'
 import './nav.css'
+import Profile from "../Profile/profile";
 
 export default function Navbar(): JSX.Element{
     const [display, setDisplay] = useState('summary');
