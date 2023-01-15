@@ -86,8 +86,9 @@ function formatDate(date:any) {
 
     return [year, month, day].join('-');
 }
-export const getTimesheetDetail = async (url: string, date: Date): Promise<any> =>{
+export const getTimesheetDetail = async (url: string, date: Date, employeeId?:any): Promise<any> =>{
     let data = formatDate(date)
+    if(employeeId===undefined){
     return await axios({
         ...getConfig,
         url: `${getConfig.baseUrl}/${url}/${data}`,
@@ -103,5 +104,24 @@ export const getTimesheetDetail = async (url: string, date: Date): Promise<any> 
             status: error.status,
             data: error.response
         }
-    })
+    })}
+    else{
+        return await axios({
+            ...getConfig,
+            url: `${getConfig.baseUrl}/${url}/${employeeId}/${data}`,
+        }).then ( (response) => {
+            console.log(response)
+            return {
+                status: response.status,
+                data: response.data
+            }
+        }).catch((error) =>{
+            console.log(error)
+            return {
+                status: error.status,
+                data: error.response
+            }
+        })
+
+    }
 }
