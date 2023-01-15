@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { createContext, useState } from "react";
 
 import Form from "react-bootstrap/Form";
 
@@ -8,12 +8,16 @@ import "./Login.css";
 import authService from "../services/auth.service";
 import AuthService from "../services/auth.service";
 import JwtUtil from "../services/jwt-util";
+import { Navigate, useNavigate  } from "react-router-dom";
 
 export default function Login() {
+    let navigate = useNavigate();
     const [email, setEmail] = useState("");
 
     const [password, setPassword] = useState("");
 
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+    
     function validateForm() {
         return email.length > 2 && password.length > 2;
     }
@@ -24,10 +28,20 @@ export default function Login() {
         console.log(email, password);
 
         await AuthService.login(email, password)
-            .then(response => alert(response.message))
+            .then(response => {
+                alert(response.message);
+                setIsLoggedIn(true);
+                navigate('/main')
+            })
             .catch(error => alert(`${error}\nLogin Unsuccessful! Please check you Email and Password!`));
     }
-
+    // if (isLoggedIn) return (
+        
+    //     <Navigate to="/main" replace={true} />
+    
+    // )
+        
+    
     return (
         <div className="Login" style={{marginLeft: 30}}>
             <Form style={{marginTop: 10, textAlign: "center"}} onSubmit={handleSubmit}>
