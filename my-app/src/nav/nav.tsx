@@ -1,14 +1,21 @@
 import React, { useEffect, useState } from 'react'
-import { Link, Navigate } from 'react-router-dom'
+import {Link, Navigate, useNavigate} from 'react-router-dom'
 import Summary from '../summary/summary';
 import TimeSheet from '../timesheet/detail/App'
 import './nav.css'
-import Profile from "../profile/profile";
+import Profile from "../Profile/Profile";
+import AuthService from "../services/auth.service";
 
 export default function Navbar(): JSX.Element{
     const [display, setDisplay] = useState('summary');
+    const navigate = useNavigate();
 
     const [authenticated, setauthenticated] = useState(false);
+
+    function logout() {
+        AuthService.logout();
+        navigate("/");
+    }
 
     // var loggedInUser = '';
     // useEffect(() => {
@@ -38,6 +45,7 @@ export default function Navbar(): JSX.Element{
                     <div className='nav-item' onClick={() => setDisplay('summary')}>Summary</div>
                     <div className='nav-item' onClick={() => setDisplay('timesheet')}>TimeSheet</div>
                     <div className='nav-item' onClick={() => setDisplay('profile')}>Profile</div>
+                    <div className='nav-item' onClick={logout}>Logout</div>
                 </div>
             </nav>
             <div className='content-container'>
