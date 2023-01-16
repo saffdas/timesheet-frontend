@@ -9,8 +9,8 @@ class DocumentService{
 
         let formData = new FormData();
 
-        formData.append("employeeId", employee);
-        formData.append("timeSheetId", 1);
+        formData.append("employeeId", employee!);
+        formData.append("timeSheetId", "1");
         formData.append("type", types);
         formData.append("file", files);
         return axios.post(summary_url, formData)
