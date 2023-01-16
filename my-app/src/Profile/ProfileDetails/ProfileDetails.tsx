@@ -69,7 +69,7 @@ export default function ProfileDetails(props: Props) {
                     <Form.Group controlId="phoneNumber">
                         <Form.Label>Phone Number:</Form.Label>
                         <Form.Control
-                            type="tel"
+                            type={"tel"}
                             value={phoneNumber}
                             placeholder="(917) 328-7765"
                             maxLength={15}
