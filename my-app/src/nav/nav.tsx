@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import {Link, Navigate, useNavigate} from 'react-router-dom'
+import React, { useState } from 'react'
+import {useNavigate} from 'react-router-dom'
 import Summary from '../summary/summary';
 import TimeSheet from '../timesheet/detail/App'
 import './nav.css'
@@ -10,36 +10,13 @@ export default function Navbar(): JSX.Element{
     const [display, setDisplay] = useState('summary');
     const navigate = useNavigate();
 
-    const [authenticated, setauthenticated] = useState(false);
-
     function logout() {
         AuthService.logout();
         navigate("/");
     }
 
-    // var loggedInUser = '';
-    // useEffect(() => {
-    //     loggedInUser = localStorage.getItem("token");
-    //     if (loggedInUser) {
-    //     setauthenticated((prevState) => true);
-    //     console.log('token: '+loggedInUser)
-    //     console.log('state: '+authenticated)
-    //     }
-    //     }, [localStorage.getItem("token")]);
-
-    // if (!loggedInUser){
-    //     alert('please log in')
-    //     return (
-            
-    //         <Navigate to='/' replace={true}/>
-    //     )
-        
-    // }
-    // else{
-        return (
-            <div className='main-container'>
-
-
+    return (
+        <div className='main-container'>
             <nav className='nav'>
                 <div className='nav-container'>
                     <div className='nav-item' onClick={() => setDisplay('summary')}>Summary</div>
@@ -59,7 +36,6 @@ export default function Navbar(): JSX.Element{
                     {display === 'profile' && <Profile/> }
                 </div>
             </div>
-            </div>
-        );
-    
+        </div>
+    );
 }
