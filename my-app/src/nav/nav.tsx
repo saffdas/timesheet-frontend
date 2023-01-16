@@ -3,7 +3,7 @@ import { Link, Navigate } from 'react-router-dom'
 import Summary from '../summary/summary';
 import TimeSheet from '../timesheet/detail/App'
 import './nav.css'
-import Profile from "../Profile/profile";
+import Profile from "../profile/profile";
 
 export default function Navbar(): JSX.Element{
     const [display, setDisplay] = useState('summary');
