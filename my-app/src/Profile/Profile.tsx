@@ -1,10 +1,13 @@
 import ProfileService, {Contact} from "../services/profile-service";
 import {useEffect, useState} from "react";
+import ProfileDetails from "./ProfileDetails/ProfileDetails";
 
 export default function Profile() {
     let [contact1, setContact1] = useState<Contact>();
     let [contact2, setContact2] = useState<Contact>();
     let [contact3, setContact3] = useState<Contact>();
+
+    const [isLoading, setLoading] = useState(true);
 
     useEffect(() => {
         ProfileService.getEmployeeContacts()
@@ -17,20 +20,23 @@ export default function Profile() {
                 if (r.length > 2)
                     setContact3((prevState) => r[2]);
                 console.log(contact1, contact2, contact3);
+                setLoading(false);
             });
     }, [])
 
-
-    let employeeEmail = localStorage.getItem("employeeEmail");
+    if (isLoading) {
+        return (
+            <h1>
+                Waiting to fetch data from backend...
+            </h1>
+        );
+    }
 
     return (
         <div>
-            <h1>Profile works!</h1>
-            <h2>Employee Email {employeeEmail}</h2>
-            <h3>{contact1?.address}</h3>
-            <h3>{contact2?.address}</h3>
-            <h3>{contact3?.address}</h3>
-            <button onClick={ProfileService.getEmployeeContacts}>getEmployeeContacts()</button>
+            <ProfileDetails index={"main"} contact={contact1!}/>
+            <ProfileDetails index={"1"} contact={contact2!}/>
+            <ProfileDetails index={"2"} contact={contact3!}/>
         </div>
     );
 }

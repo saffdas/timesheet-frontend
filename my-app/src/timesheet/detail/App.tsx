@@ -3,6 +3,7 @@ import DayProvider from "./DayContext";
 import Days from "./Days"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Table from 'react-bootstrap/Table';
+import Upload from "./Document";
 
 export default function ContextApp(): JSX.Element {
 
@@ -16,6 +17,7 @@ export default function ContextApp(): JSX.Element {
                 <h1></h1>
             </DayProvider>
             </Table>
+            <Upload />
         </div>
     );
 }
