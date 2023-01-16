@@ -2,6 +2,8 @@ import React, {useState, useEffect} from 'react';
 import summaryService, { TimeSheetSummary } from '../services/summary-service';
 import './summary.css';
 import Spinner from 'react-bootstrap/Spinner';
+import SummaryRow from './summaryRow';
+// import useState from 'react-usestateref';
 
 
 
@@ -10,43 +12,27 @@ export default function Summary(): JSX.Element{
     const [summary, setSummary] = useState<TimeSheetSummary[]>([]);
     const [isLoading, setLoading] = useState(true);
 
-    var summarys: TimeSheetSummary[] = [];
 
     useEffect(() => {
         summaryService.getTimeSheetSummary()
         .then(response => {
             console.log(response.timesheetStatusList);
             if (response.timesheetStatusList.length > 0) {
-                setSummary((preState) => [...preState, response.timesheetStatusList]);
+                setSummary(response.timesheetStatusList);
                 console.log(summary);
-                summarys = response.timesheetStatusList;
                 setLoading(false);
             }
-            console.log(summarys)
-            
-            
         })
-
     }, [])
 
-    if (isLoading){
+    if (isLoading) {
         return (
             <div>
-            <table>
-                <tr>
-                    <th><Spinner animation="border" /></th>
-                    <th><Spinner animation="border" /></th>
-                    <th><Spinner animation="border" /></th>
-                    <th><Spinner animation="border" /></th>
-                    <th><Spinner animation="border" /></th>
-                    <th><Spinner animation="border" /></th>
-                </tr>
-                
-            </table>
+                <Spinner animation="border" />
         </div>
         )
     }
-    else
+    
     return (
         <div>
             <table>
@@ -61,18 +47,9 @@ export default function Summary(): JSX.Element{
                     </tr>
                 </thead>
                 <tbody>
-                {summary.map((s, index) => {
-                    return [
-                    <tr key={index}>
-                        <td>s</td>
-                        <td>{s.totalHours} </td>
-                        <td>{s.submissionStatus}</td>
-                        <td>{s.approvalStatus}</td>
-                        <td><s>Edit</s></td>
-                        <td>{s.comment}</td>
-                    </tr>
-                    ];
-                })}
+                    {summary.map((s, index) => (
+                        <SummaryRow key={index} index={index} summary={s}/>
+                    ))}
                 </tbody>
                 
             </table>
